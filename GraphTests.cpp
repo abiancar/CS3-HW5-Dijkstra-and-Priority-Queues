@@ -84,7 +84,7 @@ void TestAddEdge(){
 	cout << "PASSED!" << endl << endl;
 }
 
-/*
+
 void TestDestructor(){
 	cout << "Testing Destructor..." << endl;
 	Graph *g = new Graph();
@@ -94,7 +94,7 @@ void TestDestructor(){
 	g->AddEdge(b, a, 15);
 	
 	delete g;
-	
+
 	
 	Graph g2 = Graph();
 	GraphNode *c = g2.AddNode('c', 12);
@@ -105,7 +105,7 @@ void TestDestructor(){
 	
 	cout << "NO ERRORS.  Use valgrind to check!" << endl << endl;
 }
-*/
+
 
 // more test functions...
 
@@ -114,9 +114,9 @@ int main(){
 	
 	
 	// TestAddNode();
-	TestAddEdge();
+	// TestAddEdge();
 
-	// TestDestructor();
+	TestDestructor();
 	// ... more tests ... 
 
 	
