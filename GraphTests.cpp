@@ -40,7 +40,14 @@ void TestAddNode(){
 
 	assert(g.NodesToString() == "[(a:15), (b:12), (c:51), (x:15656)]");
 	assert(g.ToString() == "a | \nb | \nc | \nx | \n");
-	
+
+	// edge case, user tries to add node with key that already exists! 
+	try{
+		g.AddNode('a',125124);
+		assert(false);
+	}
+	catch(const invalid_argument& e){
+	}
 	cout << "PASSED!" << endl << endl;
 }
 void TestAddEdge(){
@@ -79,6 +86,20 @@ void TestAddEdge(){
 	assert(g.NodesToString() == "[(a:15), (b:12), (c:9)]");
 	assert(g.ToString() == "a | [(a:15)->(c:9) w:2], [(a:15)->(b:12) w:8]\nb | \nc | [(c:9)->(b:12) w:0]\n");
 	
+
+	//Edge case, user tries to create an edge between two nodes, one or both of them have not been added to graph yet!
+	GraphNode* a = new GraphNode();
+	a->key = 'q';
+	a->data = 214124;
+
+	try{
+		g.AddEdge(a,gn3,123);
+		assert(false);
+	}
+	catch(const invalid_argument& e){
+	}
+	delete a;
+
 	cout << "PASSED!" << endl << endl;
 }
 
@@ -192,6 +213,17 @@ void TestGraphNodeAt(){
 	assert(g.GraphNodeToString(g.NodeAt(6)) == "(r:13)");
 	assert(g.GraphNodeToString(g.NodeAt(0)) == "(1:20)");
 
+	//testing: if user tries to find a node that does not exist
+	try{
+		g.NodeAt(8);
+		assert(false);
+	}
+	catch(const invalid_argument& e){
+	}
+
+
+
+
 	cout << "PASSED!" << endl <<endl;
 }
 
@@ -200,9 +232,9 @@ void TestSize(){
 
 	Graph g = Graph();
 	GraphNode* g1 = g.AddNode('1',20);
-	GraphNode* g2 =	g.AddNode('W',15);
-	GraphNode* g3 =	g.AddNode('m',16);
-	GraphNode* g4 = g.AddNode('1',20);
+	GraphNode* g2 =	g.AddNode('x',15);
+	GraphNode* g3 =	g.AddNode('s',16);
+	GraphNode* g4 = g.AddNode('r',20);
 	GraphNode* g5 =	g.AddNode('W',15);
 	GraphNode* g6 =	g.AddNode('m',16);
 
@@ -270,8 +302,6 @@ void TestDestructor(){
 }
 
 int main(){
-	
-	
 	TestAddNode();
 	TestAddEdge();
 	TestNodesToString();
@@ -283,7 +313,6 @@ int main(){
 	TestOrder();
 	TestDestructor();
 
-	
 	cout << "ALL TESTS PASSED!" << endl;
 	return 0;
 }

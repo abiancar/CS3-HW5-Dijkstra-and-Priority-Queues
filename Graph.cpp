@@ -18,15 +18,33 @@ using namespace std;
     //when adding a node, check if there are any duplicates!
     //We don't need to check if weights are negative
     GraphNode* Graph::AddNode(char key, int data){
+        
         GraphNode *node = new GraphNode; // structs do not need parentheses! // you can never return a pointer on the stack
         node->key = key;
         node->data = data;
-        this->nodes.push_back(node);
-        this->adjacencyList.resize(this->adjacencyList.size()+ 1); // expands adjacencyList so that we can later insert edges into it without error in Graph::addEdge()
-    
-        return node;
+
+        // if we cannot find the node already, we can add it
+        if(this->findNode(node) == -1){
+            this->nodes.push_back(node);
+            this->adjacencyList.resize(this->adjacencyList.size()+ 1); // expands adjacencyList so that we can later insert edges into it without error in Graph::addEdge()
+            return node;
+
+        }
+        // if the node already exists, throw error
+
+        else{
+            delete node;
+            throw invalid_argument("You cannot add an existing node to the graph!");
+        }
     }
 	GraphEdge* Graph::AddEdge(GraphNode *gn1, GraphNode *gn2, unsigned int weight){
+        if(this->findNode(gn1) == -1){
+            throw invalid_argument("The origin node has not yet been added to the graph!");
+        }
+        if(this->findNode(gn2) == -1){
+            throw invalid_argument("The destination node has not yet been added to the graph!");
+        }
+        
         GraphEdge *edge = new GraphEdge;
         edge->from = gn1;
         edge->to = gn2;
@@ -105,21 +123,23 @@ using namespace std;
     }
 	
     const vector<GraphEdge*>& Graph::GetEdges(const GraphNode *gn) const{ // this function needs to return a reference to a vector of GraphEdge pointers
-
-    vector<GraphNode*> nodesList = this->GetNodes();
-    int index;
-        for(size_t i = 0; i < nodesList.size(); i++){
-            if(nodesList.at(i)== gn){
-                index = i;
+        vector<GraphNode*> nodesList = this->GetNodes();
+        int index;
+            for(size_t i = 0; i < nodesList.size(); i++){
+                if(nodesList.at(i)== gn){
+                    index = i;
+                }
             }
-        }
-        return this->adjacencyList[index];
+            return this->adjacencyList[index];
 
     }
 	const vector<GraphNode*>& Graph::GetNodes() const{
         return this->nodes;
     }
 	const GraphNode* Graph::NodeAt(unsigned int idx) const{
+        if(idx >= this->GetNodes().size()){
+            throw invalid_argument("You are trying to access a node that doesn't exist in the graph yet!");
+        }
         return this->GetNodes().at(idx);
     }
 	
@@ -138,14 +158,10 @@ using namespace std;
     const int Graph::findNode(const GraphNode* target){
         vector<GraphNode*> nodesList = this->GetNodes();
         for(size_t i = 0; i < nodesList.size(); i++){
-            if(nodesList.at(i)== target){
+            if(nodesList.at(i)->key == target->key){
                 return i;
             }
         }
         return -1;
 
     }
-
-
-
-   
