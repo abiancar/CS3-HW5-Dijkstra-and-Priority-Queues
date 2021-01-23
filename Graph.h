@@ -1,3 +1,5 @@
+#ifndef GRAPH_H
+#define GRAPH_H
 
 
 #include <vector>
@@ -44,3 +46,4 @@ class Graph{
 
 
 };
+#endif

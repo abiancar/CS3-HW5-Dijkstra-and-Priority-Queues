@@ -1,9 +1,12 @@
 #include "Graph.h"
 #include "BetterPriorityQueue.h"
 #include <cassert>
+#include <iostream>
 
 using namespace std;
 
+
+/*
 void ContainsTest() {
 	cout << "Testing Contains Helper Method..." << endl;
 	
@@ -71,11 +74,12 @@ void UpdateTest() {
 	
 	cout << "PASSED!" << endl;
 }
+*/
 
 int main(){
 	
-	ContainsTest();
-	UpdateTest();
+	// ContainsTest();
+	// UpdateTest();
 	
 	cout << "ALL TESTS PASSED!!" << endl;
 	

@@ -44,12 +44,20 @@ using namespace std;
         if(this->findNode(gn2) == -1){
             throw invalid_argument("The destination node has not yet been added to the graph!");
         }
-        
+
         GraphEdge *edge = new GraphEdge;
         edge->from = gn1;
         edge->to = gn2;
         edge->weight = weight;
 
+        // check to see if the edge already exists, if so, throw another error!
+        for(size_t i = 0; i < GetEdges(gn1).size();i++){
+            if(GetEdges(gn1).at(i)->to == edge->to){
+                delete edge;
+                throw invalid_argument("The edge you are trying to create already exists!");
+            }
+        }
+        
         int index = findNode(gn1);
         
         // let's access the appropriate slot in adjacencyList (1st dimension), and add the edge to its list (2nd dimension)

@@ -100,6 +100,14 @@ void TestAddEdge(){
 	}
 	delete a;
 
+	// Test, if the edge already exists, throw error
+	try{
+		g.AddEdge(gn3,gn2);
+		assert(false);
+	}
+	catch(const invalid_argument& e){
+	}
+
 	cout << "PASSED!" << endl << endl;
 }
 
