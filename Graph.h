@@ -30,7 +30,6 @@ class Graph{
 		static string GraphNodeToString(const GraphNode *gn);
 		static string GraphEdgeToString(const GraphEdge *ge);
 		
-		
 		const vector<GraphEdge*>& GetEdges(const GraphNode *gn) const;
 		const vector<GraphNode*>& GetNodes() const;
 		const GraphNode* NodeAt(unsigned int idx) const;
