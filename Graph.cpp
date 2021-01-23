@@ -5,7 +5,17 @@
 using namespace std;
 	
     Graph::~Graph(){
-        delete this; 
+        // for(size_t i =this->Order()-1; i >=0; i--){
+        //     cout << i;
+        //     delete this->nodes.at(i); 
+
+        //     for(size_t j = this->adjacencyList[i].size()-1; j >= 0; j--){
+        //         cout << i;
+        //         cout << j;
+        //         delete this->adjacencyList[i][j];
+        //     }     
+        // }
+        delete this;
     }
     //when adding a node, check if there are any duplicates!
     //We don't need to check if weights are negative
@@ -14,12 +24,12 @@ using namespace std;
         node->key = key;
         node->data = data;
         this->nodes.push_back(node);
-        // this->adjacencyList.push_back(a)
-
-        cout << "ADDING THE FOLLOWING POINTER TO NODES" << endl;
-        cout << this->GraphNodeToString(node) << endl;
-        cout << "POINTER ADDED" << endl;
-        cout << this->GraphNodeToString(nodes.at(0)) << endl;
+        this->adjacencyList.resize(this->adjacencyList.size()+ 1); // expands adjacencyList so that we can later insert edges into it without error in Graph::addEdge()
+        
+        // cout << "ADDING THE FOLLOWING POINTER TO NODES" << endl;
+        // cout << this->GraphNodeToString(node) << endl;
+        // cout << "POINTER ADDED" << endl;
+        // cout << this->GraphNodeToString(nodes.at(0)) << endl;
 
         return node;
     }
@@ -31,24 +41,49 @@ using namespace std;
         edge->to = gn2;
         edge->weight = weight;
 
+        int index = findNode(gn1);
+        
+        // let's access the appropriate slot in adjacencyList (1st dimension), and add the edge there
+        this->adjacencyList[index].push_back(edge);
         return edge;
     }
 		
 	string Graph::NodesToString() const{
         std::string nodeString = "[";
-
-
         for(size_t i = 0; i < this-> nodes.size(); i++){
             // cout << this->GraphNodeToString(this->nodes.at(i)) << "CURRENT NODE " << endl;
             nodeString = nodeString + this->GraphNodeToString(nodes.at(i));
-            if(i != nodes.size()-1){nodeString += ',';}
-
+            if(i != nodes.size()-1){nodeString += ", ";}
         }
         nodeString += "]";   
         return nodeString;
     }
 	string Graph::ToString() const{
-        return "string";
+        std::string graphString;
+        for (unsigned int i = 0; i < this->Order(); i++){
+            GraphNode* curr = this->nodes.at(i);
+            graphString = graphString + curr->key + " | ";
+            
+            // cout << "graphString: " << graphString << endl;
+
+            //if no edges were created for this node, just print \n
+            // cout << this->adjacencyList[i].size() << " ADJ SIZE" << endl;
+            if(this->adjacencyList[i].size()==0 ){
+                graphString += "\n";
+            }
+            else{
+                for(size_t row = 0; row < this->adjacencyList[i].size(); row++){
+                    graphString += GraphEdgeToString(adjacencyList[i][row]);
+                    if(row != adjacencyList[i].size()-1){
+                        graphString += ", ";
+                    }
+                }
+                graphString+= "\n";
+            }
+        }
+        cout << graphString << endl;
+
+        return graphString;
     }
 
 	string Graph::GraphNodeToString(const GraphNode *gn){ //converts a graphNode to a string
@@ -66,13 +101,38 @@ using namespace std;
         
         return gnString;
     }
-	std::string Graph::GraphEdgeToString(const GraphEdge *ge){
-        return "placeholder";
+	std::string Graph::GraphEdgeToString(const GraphEdge *ge){        
+        //receive an edge, convert it to string
+        // getNode from -> getNode to
+        std::string edgeString = "[";
+       
+        GraphNode* to = ge->to;
+        GraphNode* from = ge->from;
+        
+        std::string destinationString = GraphNodeToString(to);
+        std::string fromString = GraphNodeToString(from);
+
+
+        cout << "from: " << fromString << endl << endl << endl;
+        cout << "to: " << destinationString << endl;
+
+
+        edgeString = edgeString + fromString + "->" + destinationString + " w:" + to_string(ge->weight) + "]";
+
+        cout << edgeString << endl;
+
+        return edgeString;
+	// assert(g.ToString() == "a | [(a:15)->(c:9) w:2]\nb | \nc | \n");
+
+    
     }
 
 
     	
-	const vector<GraphEdge*>& Graph::GetEdges(const GraphNode *gn) const{
+	const vector<GraphEdge*>& Graph::GetEdges(const GraphNode *gn) const{ // this function needs to return a reference to a vector of GraphEdge pointers
+    //    int i = this->findNode(gn); // locate the node
+
+
     }
 
 	const vector<GraphNode*>& Graph::GetNodes() const{
@@ -90,7 +150,9 @@ using namespace std;
 
     } // the number of nodes
 
-    int Graph::findKey(GraphNode* target){
+
+    // to place new edges in the appropriate slot in the adjacencyList, we will search for its corresponding slot in the nodes vector
+    const int Graph::findNode(const GraphNode* target){
         for(size_t i = 0; i < this->Order(); i++){
             if(nodes.at(i)==target){
                 return i;

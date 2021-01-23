@@ -12,38 +12,50 @@ void TestAddNode(){
 	assert(g.GraphNodeToString(g.AddNode('a', 15)) == "(a:15)");
 
 	cout << g.GraphNodeToString(g.GetNodes().at(0));
-	cout << "<-- THE POINTER I JUST ADDED SHOULD BE PRINTED HERE" << endl;
+	// cout << "<-- THE POINTER I JUST ADDED SHOULD BE PRINTED HERE" << endl;
 	
-	cout << "nodes: "  << g.NodesToString() << endl;
+	// cout << "nodes: "  << g.NodesToString() << endl;
 	//cout << "graph: " << g.ToString() << endl;
 
 	assert(g.NodesToString() == "[(a:15)]");
 	assert(g.ToString() == "a | \n");
 	
 	g.AddNode('b', 12);
-	//cout << "nodes: "  << g.NodesToString() << endl;
-	//cout << "graph: " << endl << g.ToString() << endl;
+	// cout << "nodes: "  << g.NodesToString() << endl;
+	// cout << "graph: " << endl << g.ToString() << endl;
 
 	assert(g.NodesToString() == "[(a:15), (b:12)]");
 	assert(g.ToString() == "a | \nb | \n");
-	
-	// more tests....
+
+	g.AddNode('c', 51);
+	// cout << "nodes: "  << g.NodesToString() << endl;
+	// cout << "graph: " << endl << g.ToString() << endl;
+
+	assert(g.NodesToString() == "[(a:15), (b:12), (c:51)]");
+	assert(g.ToString() == "a | \nb | \nc | \n");
+
+	g.AddNode('x', 15656);
+	// cout << "nodes: "  << g.NodesToString() << endl;
+	// cout << "graph: " << endl << g.ToString() << endl;
+
+	assert(g.NodesToString() == "[(a:15), (b:12), (c:51), (x:15656)]");
+	assert(g.ToString() == "a | \nb | \nc | \nx | \n");
 	
 	cout << "PASSED!" << endl << endl;
 }
 
-/*
+
 void TestAddEdge(){
 	cout << "Testing AddEdge..." << endl;
 	Graph g = Graph();
 	GraphNode *gn1 = g.AddNode('a', 15);
 	
-	//cout << "nodes: "  << g.NodesToString() << endl;
-	//cout << "graph: " << g.ToString() << endl;
+	// cout << "nodes: "  << g.NodesToString() << endl;
+	// cout << "graph: " << g.ToString() << endl;
 	
 	assert(g.NodesToString() == "[(a:15)]");
 	assert(g.ToString() == "a | \n");
-	
+
 	GraphNode *gn2 = g.AddNode('b', 12);
 	//cout << "nodes: "  << g.NodesToString() << endl;
 	//cout << "graph: " << endl << g.ToString() << endl;
@@ -56,8 +68,8 @@ void TestAddEdge(){
 	assert(g.ToString() == "a | \nb | \nc | \n");
 	
 	g.AddEdge(gn1, gn3, 2);
-	//cout << "nodes: "  << g.NodesToString() << endl;
-	//cout << "graph: " << endl << g.ToString() << endl;
+	cout << "nodes: "  << g.NodesToString() << endl;
+	cout << "graph: " << endl << g.ToString() << endl;
 	assert(g.NodesToString() == "[(a:15), (b:12), (c:9)]");
 	assert(g.ToString() == "a | [(a:15)->(c:9) w:2]\nb | \nc | \n");
 	
@@ -72,7 +84,7 @@ void TestAddEdge(){
 	cout << "PASSED!" << endl << endl;
 }
 
-
+/*
 void TestDestructor(){
 	cout << "Testing Destructor..." << endl;
 	Graph *g = new Graph();
@@ -101,11 +113,10 @@ void TestDestructor(){
 int main(){
 	
 	
-	TestAddNode();
-	/*
+	// TestAddNode();
 	TestAddEdge();
-	TestDestructor();
-	*/
+
+	// TestDestructor();
 	// ... more tests ... 
 
 	

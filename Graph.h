@@ -41,7 +41,7 @@ class Graph{
 	private:
 		vector<vector<GraphEdge*>> adjacencyList; // list of lists ... in plain english: list containing the vectors of numbers that represent edges between nodes
 	    vector<GraphNode*> nodes;
-		int findKey(GraphNode* target); //finds the position of the wanted node pointer in nodes
+		const int findNode(const GraphNode* target); //finds the position of the wanted node pointer in nodes
 
 
 };

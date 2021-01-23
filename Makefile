@@ -1,5 +1,5 @@
 all:
-	g++ -Wall GraphTests.cpp  Graph.cpp -o gTests
+	g++ -Wall Graph.cpp  GraphTests.cpp -o gTests
 
 run:
 	./gTests
