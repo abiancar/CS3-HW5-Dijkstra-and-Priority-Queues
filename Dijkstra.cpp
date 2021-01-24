@@ -6,11 +6,97 @@
 
 using namespace std;
 
+// General algorithm:
+// We're gonna take a graph filled with edges and nodes
+// We are going to build a priority queue starting on the first value (start)
+// This PQ will hold all neighboring nodes of the start
+// We will update the priority of each node based on the edge between the start and the node
+// Then we will use a boolean to set the start node as checked
+
+
+int findDNode(vector<DNode> vector, DNode target){
+	for(size_t i = 0; i < vector.size(); i++){
+		if(vector[i] == target){
+			return i;
+		}
+	}
+	return -1;
+}
 
 int dijkstra(const GraphNode *start, const GraphNode *end, Graph *g){\
 
-	// your code goes here
-	return 0;
+	//create priority queue
+	BetterPriorityQueue q;
+
+	//add the start node to the queue
+	DNode starter;
+	starter.pri = 0;
+	starter.node = start;
+	q.push(starter);
+
+	DNode endDNode;
+	endDNode.node = end;
+
+	DNode last;
+	last.pri = 0;
+	
+	//for storing DNodes that have already been visited
+	vector<DNode> visitedDNodes;
+
+	while(visitedDNodes.size() != g->Order()){
+		// we now need to get its edges
+		DNode originDNode = q.top();
+		vector<GraphEdge*> edges = g->GetEdges(originDNode.node);
+		cout <<  "Curr originDNOde " << q.DnodeToString(originDNode) << endl;
+
+
+		//we will calculate the distance from this point to each edge
+		//if it is smaller than the current priority of an edge, we will either add or update that edge
+		for(size_t i = 0; i < edges.size(); i++){
+			
+			GraphNode* destinationGNode = edges.at(i)->to;
+			int potentialCost = edges.at(i)->weight + originDNode.pri;
+			cout << "Potential cost: " << potentialCost << endl;
+			
+			//Creating new DNode in case if we should add or update any information
+			DNode destinationDNode;
+			destinationDNode.node = destinationGNode;
+
+			// if we have never seen this node before, add it to PQ and set its edge as the wight
+			if(q.Contains(destinationDNode) == false && findDNode(visitedDNodes, destinationDNode) == -1){
+				destinationDNode.pri = potentialCost;
+				q.push(destinationDNode);
+			}
+			// the node is not currently on our priority queue but we have visited it before
+			else if(q.Contains(destinationDNode) == false && findDNode(visitedDNodes, destinationDNode) != -1){ 
+				int index = findDNode(visitedDNodes, destinationDNode);
+				// if we find that 'going backwards' can find us a better solution to an 
+				// already completed node, we will 
+				if(visitedDNodes[index].pri > potentialCost){
+					visitedDNodes[index].pri = potentialCost;
+				}
+
+			}
+			// the node is currently in the Priority Queue and may need to be updated
+			else{
+				int index = findDNode(q.getPQList(), destinationDNode);
+				DNode PQDNode = q.getPQList()[index];
+				if (PQDNode.pri > potentialCost){
+					cout << "UPDATING! " << endl;
+					q.Update(destinationDNode);
+				}
+			}
+		}
+		originDNode.visited = true;
+		visitedDNodes.push_back(originDNode);
+		q.pop();
+		cout << q.ToString() << endl;
+	}
+
+	int finder = findDNode(visitedDNodes, endDNode);
+	
+	cout << "RESULT: " << visitedDNodes[finder].pri << endl;
+	return visitedDNodes[finder].pri;
 }
 
 

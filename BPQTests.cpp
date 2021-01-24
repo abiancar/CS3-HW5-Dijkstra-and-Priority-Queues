@@ -29,7 +29,7 @@ void ContainsTest() {
 	q.push(bravo);
 	
 	// cout << q.DnodeToString(n);
-	cout << q.ToString() << endl;
+	// cout << q.ToString() << endl;
 
 	assert(q.Contains(n) == true);
 	assert(q.Contains(bravo) == true);
@@ -42,11 +42,10 @@ void ContainsTest() {
 
 	// more tests go here!
 	
+
 	
-	cout << "PASSED!" << endl;
+	cout << "PASSED!" << endl << endl;
 }
-
-
 
 void UpdateTest() {
 	cout << "Testing Update Helper Method..." << endl;
@@ -68,9 +67,9 @@ void UpdateTest() {
 		DNode cur;
 		cur.pri = i;
 		cur.node = nodes.at(i);
-		cout << "inserting cur.pri: " << cur.pri << "  node: " << cur.node->key << endl;
+		// cout << "inserting cur.pri: " << cur.pri << "  node: " << cur.node->key << endl;
 		q.push(cur);
-		cout << "size: " << q.size() << endl;
+		// cout << "size: " << q.size() << endl;
 	}
 	
 
@@ -79,10 +78,9 @@ void UpdateTest() {
 	DNode positive;
 	positive.node = f;
 	positive.pri = 0;
-	cout << "q before: " << q.ToString() << endl;
+	// cout << "q before: " << q.ToString() << endl;
 	assert(q.Update(positive) == true);
-	cout << "q after: " << q.ToString() << endl;
-
+	// cout << "q after: " << q.ToString() << endl;
 
 	// Either one of these solutions is correct depending on
 	// how you implement the priority queue
@@ -90,7 +88,14 @@ void UpdateTest() {
 	string soln2 = "[(f: 0), (b: 1), (a: 0), (d: 3), (e: 4), (c: 2)]";
 	assert(q.ToString() == soln1 || q.ToString() == soln2);
 	
+	DNode newPositive;
+	newPositive.node = e;
+	newPositive.pri = 0;
 	
+	// cout << "q before: " << q.ToString() << endl;
+	assert(q.Update(newPositive) == true);
+	assert(q.ToString() == "[(a: 0), (f: 0), (e: 0), (c: 2), (d: 3), (b: 1)]");
+	// cout << "q after: " << q.ToString() << endl;
 	
 	Graph g1 = Graph();
 	BetterPriorityQueue q1;
@@ -102,6 +107,7 @@ void UpdateTest() {
 	GraphNode* z = g1.AddNode('z');
 	GraphNode* o = g1.AddNode('o');
 	GraphNode* r = g1.AddNode('r');
+	GraphNode* k = g1.AddNode('q');
 
 	DNode alpha;
 	alpha.node = a;
@@ -135,6 +141,10 @@ void UpdateTest() {
 	replacer.node = d;
 	replacer.pri = 6;
 
+	DNode kilo;
+	kilo.node = k;
+	kilo.pri = 142;
+
 	q1.push(alpha);
 	q1.push(bravo);
 	q1.push(charlie);
@@ -143,17 +153,15 @@ void UpdateTest() {
 	q1.push(oscar);
 	q1.push(romeo);
 	
-	cout << "q1 before: " << q1.ToString() << endl;
+	// cout << "q1 before: " << q1.ToString() << endl;
 	assert(q1.Update(replacer) == true);
-	cout << "q1 after: " << q1.ToString() << endl;
+	// cout << "q1 after: " << q1.ToString() << endl;
 
 
-	// more tests go here...
+	assert(q1.Update(kilo) == false);	
 	
-	
-	cout << "PASSED!" << endl;
+	cout << "PASSED!" << endl << endl;
 }
-
 
 int main(){
 	

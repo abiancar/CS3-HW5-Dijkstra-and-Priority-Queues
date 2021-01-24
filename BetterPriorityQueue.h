@@ -10,4 +10,5 @@ public:
     bool Update(DNode dijkstrian);
     string ToString();
     static string DnodeToString(DNode);
+    vector<DNode> getPQList();
 };

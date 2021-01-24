@@ -3,9 +3,10 @@
 
 using namespace std;
 
+    vector<DNode> BetterPriorityQueue::getPQList(){
+        return this->c;
+    }
     bool BetterPriorityQueue::Contains(DNode dijkstrian){
-        
-
         for(size_t i = 0 ; i < this->c.size(); i++){
             if(this->c.at(i) == dijkstrian){
                 return true;
@@ -16,7 +17,6 @@ using namespace std;
     bool BetterPriorityQueue::Update(DNode dijkstrian){
         //if the Priority Queue contains the desired node, then we can update the PQ
         if(this->Contains(dijkstrian) == true){
-            cout <<  "ENTERED" << endl;
             
             //temporay storage of all Nodes
             vector<DNode> tmpVector;
@@ -43,7 +43,6 @@ using namespace std;
     string BetterPriorityQueue::ToString(){
         std::string DNodeString = "[";
         for(size_t i = 0 ; i < this->c.size(); i++){
-            DNode currDijkstrian = this->c[i];
             DNodeString += DnodeToString(this->c[i]);
             if(i != this->c.size()-1){
                 DNodeString += ", ";
