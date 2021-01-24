@@ -43,7 +43,7 @@ int dijkstra(const GraphNode *start, const GraphNode *end, Graph *g){\
 	//for storing DNodes that have already been visited
 	vector<DNode> visitedDNodes;
 
-	while(visitedDNodes.size() != g->Order()){
+	while(q.empty()!= true){
 		// we now need to get its edges
 		DNode originDNode = q.top();
 		vector<GraphEdge*> edges = g->GetEdges(originDNode.node);
@@ -82,11 +82,18 @@ int dijkstra(const GraphNode *start, const GraphNode *end, Graph *g){\
 				int index = findDNode(q.getPQList(), destinationDNode);
 				DNode PQDNode = q.getPQList()[index];
 				if (PQDNode.pri > potentialCost){
+					destinationDNode.pri = potentialCost;
 					cout << "UPDATING! " << endl;
 					q.Update(destinationDNode);
 				}
 			}
+			for(size_t j = 0; j < visitedDNodes.size(); j++){
+			cout <<  "Visited Node: " << q.DnodeToString(visitedDNodes[j]) << endl;
+
+			}
 		}
+		
+		
 		originDNode.visited = true;
 		visitedDNodes.push_back(originDNode);
 		q.pop();
@@ -141,6 +148,7 @@ int DijkstraTest(){
 	
 	unsigned int ans = dijkstra(g->NodeAt(0), e, g);
 	assert(ans == 20);
+	cout << "PASSED ALL TESTS " << endl;
 
 	delete g;
 		
