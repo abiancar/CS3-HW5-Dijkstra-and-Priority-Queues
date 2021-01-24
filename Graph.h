@@ -1,9 +1,9 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-
 #include <vector>
 #include <string>
+
 using namespace std;
 struct GraphNode {
 	char key;
