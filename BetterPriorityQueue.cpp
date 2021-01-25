@@ -3,9 +3,11 @@
 
 using namespace std;
 
+    // used to bypass protected c outside of this function
     vector<DNode> BetterPriorityQueue::getPQList(){
         return this->c;
     }
+    //checks if we can find a DNode in this PQ
     bool BetterPriorityQueue::Contains(DNode dijkstrian){
         for(size_t i = 0 ; i < this->c.size(); i++){
             if(this->c.at(i) == dijkstrian){
@@ -40,6 +42,7 @@ using namespace std;
         return false;
 
     }
+    // converts PQ to string 
     string BetterPriorityQueue::ToString(){
         std::string DNodeString = "[";
         for(size_t i = 0 ; i < this->c.size(); i++){
@@ -51,6 +54,7 @@ using namespace std;
         DNodeString += "]";
         return DNodeString;
     }
+    //converts DNode to string
     string BetterPriorityQueue::DnodeToString(DNode dijkstrian){
         std::string DnString = "(";
         DnString = DnString + dijkstrian.node->key + ": " + to_string(dijkstrian.pri) + ")";
