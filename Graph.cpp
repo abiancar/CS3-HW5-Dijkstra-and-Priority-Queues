@@ -101,10 +101,6 @@ using namespace std;
     }
 	
     string Graph::GraphNodeToString(const GraphNode *gn){ //converts a graphNode to a string
-        // we are gonna receive a GraphNode pointer
-        // get the key and data it refers to
-        // put em in a string
-        //that's it folks
         GraphNode g = *gn;
         std::string gnString = "(";
         gnString = gnString + g.key + ":" + to_string(g.data) + ")";    

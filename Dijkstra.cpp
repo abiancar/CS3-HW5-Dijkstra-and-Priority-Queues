@@ -6,6 +6,17 @@
 
 using namespace std;
 
+/*
+Time Complexity: (m * n^2) * O log (m)
+The user will input a graph, which in the worst case costs O(n^2) as it is implemented as an adjacencyList.
+An example of the graph functionality is adding an edge, where the pc first has to get a row of nodes, check if an edge already exists,
+and then insert the edge in the appropriate slot. The BetterPriority Queue has a worst case scenario of O(log(n)), which would be reached when using the update() method, which is the equivalent
+to the worst case pop() scenario. 
+
+The number of operations completed in Dijkstra's algorithm depends highly on the number of edges in the graph, let's call these m. The number of nodes in the graph we can call n.
+The total time complexity would be approximately (m * n^ 2) * O log(m), as in the worst case scenario, I would have to use m x n calls of the update method when using Dijkstra's algorithm.
+*/
+
 // General algorithm:
 // We're gonna take a graph filled with edges and nodes
 // We are going to build a priority queue starting on the first value (start)
